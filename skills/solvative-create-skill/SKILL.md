@@ -37,11 +37,13 @@ Ask one question at a time.
 
 Use this exact template:
 
-~~~markdown
+```markdown
 ---
 name: solvative-<verb>-<noun>
-description: This skill should be used when the user asks to "<trigger 1>", "<trigger 2>", "<trigger 3>", or <natural language summary of when to use>. It <one sentence describing what it does>.
+description: This skill should be used when the user asks to "<trigger 1>", "<trigger 2>", "<trigger 3>", "<trigger 4>", "<trigger 5>", or <natural language summary of when to use>. It <one sentence describing what it does>.
 version: 1.0.0
+---
+
 ---
 
 # <Human-Readable Skill Title>
@@ -60,7 +62,7 @@ version: 1.0.0
 ## Process
 
 <Step-by-step instructions Claude should follow. Use numbered phases with clear headings.>
-~~~
+```
 
 ### Phase 3: Place the File
 
