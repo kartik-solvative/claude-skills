@@ -1,7 +1,7 @@
 ---
 name: solvative-create-deck
 description: This skill should be used when the user asks to "create a presentation", "create a deck", "make slides", "build a PPTX", "generate a presentation", or wants to produce a Solvative-branded deck for a client or internal audience. It generates polished, Google Slides-compatible PPTX files through conversational questioning, in-depth research, outline approval, and a 20-slide type template library in the Solvative design language.
-version: 1.0.0
+version: 1.1.0
 ---
 
 # Create Solvative Deck
@@ -10,7 +10,7 @@ This skill generates polished Solvative-branded PPTX presentation decks.
 
 It follows a five-phase process: **question → research → outline → generate → iterate**.
 
-All output uses Montserrat (Google Slides native font), solid fills only, and the Solvative color palette — ensuring zero fidelity loss when the PPTX is imported into Google Slides.
+All output uses Poppins, solid fills only, and the Solvative color palette — ensuring zero fidelity loss when the PPTX is imported into Google Slides.
 
 ---
 
@@ -18,7 +18,7 @@ All output uses Montserrat (Google Slides native font), solid fills only, and th
 
 - **Output:** `YYYY-MM-DD-<deck-name>.pptx` in current working directory
 - **Slide size:** 13.333" × 7.5" (16:9 widescreen)
-- **Font:** Montserrat (all weights)
+- **Font:** Poppins (all weights)
 - **Slides:** 20 types — see Slide Library below
 - **Iteration:** Unlimited — request changes and Claude regenerates
 
@@ -40,13 +40,14 @@ from datetime import date
 
 # ── Color palette (Solvative brand) ──────────────────────────
 DARK_TEAL   = RGBColor(0x00, 0x21, 0x25)  # #002125 — dark backgrounds
-TEAL        = RGBColor(0x00, 0x6D, 0x77)  # #006D77 — left panels, badges
-YELLOW      = RGBColor(0xFF, 0xC4, 0x00)  # #FFC400 — accents, rules
+PRIMARY     = RGBColor(0x01, 0x5C, 0x65)  # #015C65 — primary brand teal
+TEAL        = RGBColor(0x00, 0x6D, 0x77)  # #006D77 — teal accent
+YELLOW      = RGBColor(0xFF, 0xC4, 0x00)  # #FFC400 — accents, CTAs
 WHITE       = RGBColor(0xFF, 0xFF, 0xFF)
 TEXT_DARK   = RGBColor(0x10, 0x18, 0x28)  # #101828 — headings on white
 TEXT_BODY   = RGBColor(0x37, 0x41, 0x51)  # #374151 — body text on white
 TEXT_MUTED  = RGBColor(0x6B, 0x72, 0x80)  # #6B7280 — captions, labels
-TEAL_LIGHT  = RGBColor(0xE1, 0xF0, 0xF0)  # light teal — card backgrounds
+TEAL_LIGHT  = RGBColor(0xEE, 0xF4, 0xF5)  # #EEF4F5 — card backgrounds (brand)
 YELLOW_BG   = RGBColor(0xFF, 0xF8, 0xDC)  # callout background
 YELLOW_BDR  = RGBColor(0xFF, 0xE5, 0x66)  # callout border
 CALLOUT_TXT = RGBColor(0x5C, 0x47, 0x00)  # dark amber — callout body
@@ -58,7 +59,7 @@ DIVIDER     = RGBColor(0xD1, 0xE5, 0xE5)  # horizontal rule on white
 # ── Slide dimensions ─────────────────────────────────────────
 W    = Inches(13.333)
 H    = Inches(7.5)
-FONT = "Montserrat"
+FONT = "Poppins"
 
 TODAY = date.today().strftime("%B %Y")   # e.g. "March 2026"
 ```
@@ -127,18 +128,50 @@ def add_slide_number(slide, num, total):
            Inches(0.7), Inches(0.28),
            size=Pt(9), color=TEXT_MUTED, align=PP_ALIGN.RIGHT)
 
+LOGO_PNG = "/tmp/solvative-logo.png"  # transparent bg — download once at start of session
+
+def _ensure_logo():
+    """Download and cache the official Solvative logo PNG if not already present."""
+    import os, requests
+    from io import BytesIO
+    if not os.path.exists(LOGO_PNG):
+        r = requests.get(
+            "https://solvative.com/_next/static/media/solvative-logo.d15f1b37.svg",
+            timeout=8)
+        # Convert SVG → PNG via rsvg-convert (requires librsvg: brew install librsvg)
+        import subprocess, tempfile
+        with tempfile.NamedTemporaryFile(suffix=".svg", delete=False) as f:
+            f.write(r.content)
+            svg_path = f.name
+        subprocess.run(["rsvg-convert", "-w", "440", "-h", "92",
+                        svg_path, "-o", LOGO_PNG], check=True)
+
 def add_logo_solvative_dark(slide):
-    """White pill with SOLVATIVE text — for dark background slides."""
-    add_rect(slide, Inches(0.45), Inches(0.22), Inches(2.2), Inches(0.46), WHITE)
-    add_tb(slide, "SOLVATIVE",
-           Inches(0.45), Inches(0.29), Inches(2.2), Inches(0.32),
-           size=Pt(11), bold=True, color=DARK_TEAL, align=PP_ALIGN.CENTER)
+    """White rounded-rectangle pill with official Solvative logo — for dark background slides."""
+    from pptx.oxml.ns import qn
+    _ensure_logo()
+    pill_w, pill_h = Inches(2.4), Inches(0.52)
+    pill_x, pill_y = Inches(0.45), Inches(0.2)
+    # Rounded pill
+    shape = slide.shapes.add_shape(5, pill_x, pill_y, pill_w, pill_h)
+    shape.fill.solid(); shape.fill.fore_color.rgb = WHITE; shape.line.fill.background()
+    sp = shape._element; prstGeom = sp.spPr.find(qn('a:prstGeom'))
+    if prstGeom:
+        avLst = prstGeom.find(qn('a:avLst'))
+        if avLst:
+            for gd in avLst.findall(qn('a:gd')):
+                if gd.get('name') == 'adj': gd.set('fmla', 'val 50000')
+    img_w, img_h = Inches(1.9), Inches(0.36)
+    slide.shapes.add_picture(LOGO_PNG,
+        pill_x + (pill_w - img_w) / 2,
+        pill_y + (pill_h - img_h) / 2,
+        img_w, img_h)
 
 def add_logo_solvative_light(slide):
-    """SOLVATIVE text directly — for white/light background slides."""
-    add_tb(slide, "SOLVATIVE",
-           Inches(0.5), Inches(0.22), Inches(2.1), Inches(0.36),
-           size=Pt(11), bold=True, color=DARK_TEAL)
+    """Official Solvative logo directly on light/white background."""
+    _ensure_logo()
+    slide.shapes.add_picture(LOGO_PNG,
+        Inches(0.5), Inches(0.18), Inches(1.9), Inches(0.36))
 
 def add_logo_client(slide, client_logo):
     """

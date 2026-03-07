@@ -10,6 +10,14 @@ Versioning follows [Semantic Versioning](https://semver.org/):
 
 ---
 
+## [1.2.0] - 2026-03-07
+
+### Changed
+- `solvative-create-deck`: Updated brand constants — font changed from Montserrat to **Poppins** (official brand font per Brand Identity document); added `PRIMARY = #015C65` teal; updated `TEAL_LIGHT` to `#EEF4F5` (brand-accurate); updated `add_logo_solvative_dark/light` helpers to use the official Solvative logo SVG (fetched from solvative.com) inside a rounded-rectangle pill on dark slides
+- Updated `CLAUDE.md` brand system constants to match official Brand Identity PDF (Poppins, #015C65, #EEF4F5)
+
+---
+
 ## [1.1.0] - 2026-03-07
 
 ### Added
