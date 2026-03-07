@@ -9,7 +9,7 @@ Shared Claude Code skills for the Solvative team. Install once, get access to al
 Clone the repo directly into your local Claude plugins directory:
 
 ```bash
-git clone git@github.com:kartik-solvative/claude-skills.git ~/.claude/plugins/local/solvative-claude-skills
+git clone https://github.com/kartik-solvative/claude-skills.git ~/.claude/plugins/local/solvative-claude-skills
 ```
 
 Then restart Claude Code. Skills are available immediately — no further configuration needed.
