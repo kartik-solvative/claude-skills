@@ -10,6 +10,19 @@ Versioning follows [Semantic Versioning](https://semver.org/):
 
 ---
 
+## [1.1.0] - 2026-03-07
+
+### Added
+- `solvative-create-marketing-site` skill — generates UI-demo-first, block-based CMS marketing sites powered by Hygraph with scroll-storytelling and modern immersive design
+
+### Fixed
+- Added `.claude-plugin/marketplace.json` so the plugin is installable via `claude plugin marketplace add`
+- Added `version` field to `.claude-plugin/plugin.json`
+- Made repository public
+- Added `.gitignore`
+
+---
+
 ## [1.0.0] - 2026-03-05
 
 ### Added

@@ -1,3 +1,9 @@
+---
+name: solvative-create-marketing-site
+description: This skill should be used when the user wants to "create a marketing site", "build a marketing website", "generate a Solvative marketing page", "create a landing page", or wants to produce a UI-demo-first, block-based CMS marketing website powered by Hygraph with scroll-storytelling and modern immersive design.
+version: 1.0.0
+---
+
 # Marketing Site Generator — Master Skill v5
 ## UI-Demo-First · Block-Based CMS · Hygraph-Powered · Scroll-Storytelling · Modern Immersive Design
 

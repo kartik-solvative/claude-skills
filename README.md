@@ -22,6 +22,7 @@ claude plugin install solvative-claude-skills@solvative
 |---|---|---|
 | `solvative-create-deck` | Generates Solvative-branded PPTX presentations | "create a presentation", "make slides", "build a deck", "create a PPTX" |
 | `solvative-create-skill` | Guides authoring a new skill for this plugin | "create a new Solvative skill", "add a skill", "write a skill for Solvative" |
+| `solvative-create-marketing-site` | Generates Hygraph-powered marketing sites with scroll-storytelling | "create a marketing site", "build a marketing website", "create a landing page" |
 
 ## Usage
 
