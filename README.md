@@ -10,9 +10,12 @@ Clone the repo directly into your local Claude plugins directory:
 
 ```bash
 git clone https://github.com/kartik-solvative/claude-skills.git ~/.claude/plugins/local/solvative-claude-skills
+rm ~/.claude/plugins/local/solvative-claude-skills/.claude-plugin/marketplace.json
 ```
 
 Then restart Claude Code. Skills are available immediately — no further configuration needed.
+
+> The `marketplace.json` removal is required — Claude Code treats a plugin with that file as a marketplace instead of a plugin, and won't load the skills.
 
 **Staying up to date:**
 
@@ -123,7 +126,7 @@ version: 1.0.0
 <Numbered phases with clear headings. Each phase has explicit steps.>
 ```
 
-**4. Bump versions** — update `version` in `plugin.yaml`, `.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json` (minor bump: `1.1.0` → `1.2.0`).
+**4. Bump versions** — update `version` in `plugin.yaml` and `.claude-plugin/plugin.json` (minor bump: `1.1.0` → `1.2.0`).
 
 **5. Update `CHANGELOG.md`** — add an entry at the top:
 
@@ -151,7 +154,7 @@ Before submitting, verify:
 - [ ] Process is written as **numbered phases** with explicit steps — not vague prose
 - [ ] Any Solvative brand/convention details are **explicit and complete** (colors, fonts, file naming, output format)
 - [ ] Skill has a **Quick Reference** section at the top for at-a-glance use
-- [ ] All three version files bumped: `plugin.yaml`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`
+- [ ] Version bumped in `plugin.yaml` and `.claude-plugin/plugin.json`
 - [ ] `CHANGELOG.md` updated
 - [ ] README skills table updated
 
@@ -202,7 +205,7 @@ Use WebSearch to gather supporting data for each slide topic...
 
 ## Versioning
 
-This plugin uses [Semantic Versioning](https://semver.org/). Three files must stay in sync: `plugin.yaml`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`.
+This plugin uses [Semantic Versioning](https://semver.org/). Two files must stay in sync: `plugin.yaml` and `.claude-plugin/plugin.json`.
 
 | Change | Bump | Example |
 |---|---|---|
