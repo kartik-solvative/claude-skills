@@ -44,8 +44,6 @@ description: This skill should be used when the user asks to "<trigger 1>", "<tr
 version: 1.0.0
 ---
 
----
-
 # <Human-Readable Skill Title>
 
 <One paragraph describing what this skill does and when to use it.>
