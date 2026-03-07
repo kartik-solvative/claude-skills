@@ -15,7 +15,7 @@
         "name": "Solvative",
         "email": "hello@solvative.com"
       },
-      "source": ".",
+      "source": "./plugins/solvative-claude-skills",
       "category": "productivity"
     }
   ]

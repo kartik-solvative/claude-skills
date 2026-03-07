@@ -6,21 +6,27 @@ Shared Claude Code skills for the Solvative team. Install once, get access to al
 
 ## Install
 
-Clone the repo directly into your local Claude plugins directory:
+**Option A — Marketplace install (recommended):**
 
 ```bash
-git clone https://github.com/kartik-solvative/claude-skills.git ~/.claude/plugins/local/solvative-claude-skills
-rm ~/.claude/plugins/local/solvative-claude-skills/.claude-plugin/marketplace.json
+claude plugin marketplace add kartik-solvative/claude-skills
+claude plugin install solvative-claude-skills@solvative
 ```
 
-Then restart Claude Code. Skills are available immediately — no further configuration needed.
-
-> The `marketplace.json` removal is required — Claude Code treats a plugin with that file as a marketplace instead of a plugin, and won't load the skills.
-
-**Staying up to date:**
+**Option B — Manual local install:**
 
 ```bash
-cd ~/.claude/plugins/local/solvative-claude-skills && git pull
+git clone https://github.com/kartik-solvative/claude-skills.git /tmp/solvative-skills
+cp -r /tmp/solvative-skills/plugins/solvative-claude-skills ~/.claude/plugins/local/
+rm -rf /tmp/solvative-skills
+```
+
+Then restart Claude Code.
+
+**Staying up to date (Option B):**
+
+```bash
+cd /tmp && git clone https://github.com/kartik-solvative/claude-skills.git solvative-skills && cp -r solvative-skills/plugins/solvative-claude-skills/* ~/.claude/plugins/local/solvative-claude-skills/ && rm -rf /tmp/solvative-skills
 ```
 
 ---
