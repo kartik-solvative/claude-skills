@@ -124,7 +124,7 @@ function bodyPara(text, opts = {}) {
   const runs = Array.isArray(text) ? text : [new TextRun({ text, font: "Arial", size: 20, color: GRAY })];
   return new Paragraph({
     spacing: { after: 120, ...(opts.spacing || {}) },
-    alignment: opts.alignment,
+    alignment: opts.alignment !== undefined ? opts.alignment : AlignmentType.BOTH,
     children: runs
   });
 }
@@ -824,6 +824,7 @@ const mainContent = {
     bodyPara("The following are explicitly excluded from this SOW unless addressed via a Change Order:"),
     ...outOfScope.map(item => new Paragraph({
       numbering: { reference: "bullets", level: 0 },
+      alignment: AlignmentType.BOTH,
       spacing: { after: 60 },
       children: [new TextRun({ text: item, font: "Arial", size: 18, color: GRAY })]
     })),
@@ -832,6 +833,7 @@ const mainContent = {
     sectionHeading("Assumptions and Dependencies"),
     ...assumptions.map((item, i) => new Paragraph({
       numbering: { reference: "numbers", level: 0 },
+      alignment: AlignmentType.BOTH,
       spacing: { after: 80 },
       children: [new TextRun({ text: item, font: "Arial", size: 18, color: GRAY })]
     })),
