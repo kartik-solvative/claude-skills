@@ -10,6 +10,13 @@ Versioning follows [Semantic Versioning](https://semver.org/):
 
 ---
 
+## [1.3.0] - 2026-03-09
+
+### Added
+- `solvative-create-sow` skill — generates Solvative-branded Statement of Work (.docx) documents via a 6-phase conversational workflow (interview → research → structure → review → generate → iterate). Includes complete docx-js template with brand colors, logo, cover page, EPIC-based scope tables, sprint plan with EPIC sub-headers, Gantt chart, resource allocation, pricing with discount framing, and signature block. Bundled assets include the official Solvative logo and a reference template.
+
+---
+
 ## [1.2.0] - 2026-03-07
 
 ### Changed

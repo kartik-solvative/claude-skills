@@ -36,6 +36,7 @@ cd /tmp && git clone https://github.com/kartik-solvative/claude-skills.git solva
 | Skill | What it does | When Claude uses it |
 |---|---|---|
 | `solvative-create-deck` | Generates Solvative-branded PPTX presentations via 5-phase conversational flow | "create a presentation", "make slides", "build a deck", "create a PPTX" |
+| `solvative-create-sow` | Generates Solvative-branded Statement of Work (.docx) documents via 6-phase conversational flow | "create a SOW", "write a statement of work", "draft a proposal", "build a scope document" |
 | `solvative-create-skill` | Guides authoring and submitting a new skill to this plugin | "create a new Solvative skill", "add a skill", "write a skill for Solvative" |
 | `solvative-create-marketing-site` | Generates Hygraph-powered marketing sites with block-based CMS and scroll-storytelling | "create a marketing site", "build a marketing website", "create a landing page" |
 
