@@ -146,32 +146,46 @@ def _ensure_logo():
         subprocess.run(["rsvg-convert", "-w", "440", "-h", "92",
                         svg_path, "-o", LOGO_PNG], check=True)
 
+def no_shadow(shape):
+    """Explicitly disable all shadow/glow effects on a shape."""
+    from lxml import etree
+    spPr = shape._element.spPr
+    for tag in [qn('a:effectLst'), qn('a:effectDag')]:
+        el = spPr.find(tag)
+        if el is not None:
+            spPr.remove(el)
+    etree.SubElement(spPr, qn('a:effectLst'))
+
 def add_logo_solvative_dark(slide):
     """White rounded-rectangle pill with official Solvative logo — for dark background slides."""
-    from pptx.oxml.ns import qn
     _ensure_logo()
-    pill_w, pill_h = Inches(2.4), Inches(0.52)
-    pill_x, pill_y = Inches(0.45), Inches(0.2)
-    # Rounded pill
+    pill_w, pill_h = Inches(2.5), Inches(0.56)
+    pill_x, pill_y = Inches(0.45), Inches(0.18)
     shape = slide.shapes.add_shape(5, pill_x, pill_y, pill_w, pill_h)
     shape.fill.solid(); shape.fill.fore_color.rgb = WHITE; shape.line.fill.background()
-    sp = shape._element; prstGeom = sp.spPr.find(qn('a:prstGeom'))
+    no_shadow(shape)
+    prstGeom = shape._element.spPr.find(qn('a:prstGeom'))
     if prstGeom:
         avLst = prstGeom.find(qn('a:avLst'))
         if avLst:
             for gd in avLst.findall(qn('a:gd')):
                 if gd.get('name') == 'adj': gd.set('fmla', 'val 50000')
-    img_w, img_h = Inches(1.9), Inches(0.36)
-    slide.shapes.add_picture(LOGO_PNG,
+    img_w = Inches(1.95)
+    # Pass width only — python-pptx auto-calculates height to preserve aspect ratio (no skew)
+    pic = slide.shapes.add_picture(LOGO_PNG,
         pill_x + (pill_w - img_w) / 2,
-        pill_y + (pill_h - img_h) / 2,
-        img_w, img_h)
+        pill_y + Inches(0.09),
+        img_w)
+    no_shadow(pic)
 
 def add_logo_solvative_light(slide):
-    """Official Solvative logo directly on light/white background."""
+    """Official Solvative logo top-right, no container — for light background slides."""
     _ensure_logo()
-    slide.shapes.add_picture(LOGO_PNG,
-        Inches(0.5), Inches(0.18), Inches(1.9), Inches(0.36))
+    img_w = Inches(2.4)
+    # Pass width only — height auto-calculated from aspect ratio
+    pic = slide.shapes.add_picture(LOGO_PNG,
+        W - img_w - Inches(0.45), Inches(0.14), img_w)
+    no_shadow(pic)
 
 def add_logo_client(slide, client_logo):
     """
