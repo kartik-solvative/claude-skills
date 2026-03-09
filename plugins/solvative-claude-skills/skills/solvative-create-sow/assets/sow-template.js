@@ -664,7 +664,7 @@ const assumptions = [
   "The existing backend APIs will remain stable and available throughout the project duration. Any changes to APIs by AGIA or its vendors during the engagement may require scope reassessment.",
   "Solvative will not commence performing any services unless and until Solvative receives the initial payment upon execution. The remaining balance is due upon production launch.",
   "For any out-of-scope work, it will be pre-approved by the Client and documented through a Change Order.",
-  "This Statement of Work is governed by the Master Client Agreement (MCA) executed between AGIA and Solvative. General terms including liability, cancellation, payment terms, and dispute resolution are covered under the MCA.",
+  "This Statement of Work is governed by the Master Service Agreement (MSA) executed between AGIA and Solvative. General terms including liability, cancellation, payment terms, and dispute resolution are covered under the MSA.",
 ];
 
 // ── Signature Block ──

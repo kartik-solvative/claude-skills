@@ -294,7 +294,7 @@ Every Solvative SOW includes these sections in this order:
 | 11 | Assumptions and Dependencies | Numbered list including timeline protection clause |
 | 12 | Project Approval and Acceptance | Two-column signature block |
 
-### Sections to move to MCA (NOT in SOW)
+### Sections to move to MSA (NOT in SOW)
 
 The following belong in the Master Client Agreement, not the SOW:
 - Travel/lodging/meal reimbursement details
@@ -303,7 +303,7 @@ The following belong in the Master Client Agreement, not the SOW:
 - General liability clauses
 - Detailed payment procedures
 
-The SOW should reference the MCA: "This Statement of Work is governed by the Master Client Agreement (MCA) executed between [Client] and Solvative."
+The SOW should reference the MSA: "This Statement of Work is governed by the Master Service Agreement (MSA) executed between [Client] and Solvative."
 
 ---
 
