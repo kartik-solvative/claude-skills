@@ -1,0 +1,10 @@
+{
+  "name": "solvative-claude-skills",
+  "version": "1.1.0",
+  "description": "Shared Claude Code skills for the Solvative team",
+  "author": {
+    "name": "Solvative",
+    "url": "https://solvative.com"
+  },
+  "keywords": ["solvative", "skills", "deck", "marketing", "pptx"]
+}

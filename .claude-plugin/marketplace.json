@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "solvative",
+  "description": "Shared Claude Code plugins and skills for the Solvative team",
+  "owner": {
+    "name": "Solvative",
+    "email": "hello@solvative.com"
+  },
+  "plugins": [
+    {
+      "name": "solvative-claude-skills",
+      "description": "Shared Claude Code skills for the Solvative team",
+      "version": "1.1.0",
+      "author": {
+        "name": "Solvative",
+        "email": "hello@solvative.com"
+      },
+      "source": "./plugins/solvative-claude-skills",
+      "category": "productivity"
+    }
+  ]
+}
