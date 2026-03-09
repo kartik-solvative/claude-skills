@@ -57,11 +57,13 @@ If context exists, extract what you can and present it: "Based on the transcript
 Keep asking until you have all of these. Mark items as gathered from context vs. needing confirmation:
 
 **Client & Contact:**
+
 - Client company name and description
 - Primary contact name and title
 - Industry/vertical
 
 **Project:**
+
 - Project name / title
 - Problem statement — what's broken, outdated, or needed?
 - Proposed solution — what will Solvative build?
@@ -69,25 +71,30 @@ Keep asking until you have all of these. Mark items as gathered from context vs.
 - Key features / functional requirements (these become EPICs)
 
 **Commercial:**
+
 - Total investment amount
 - Any discount? If so, what framing (first-engagement, volume, strategic, etc.)
 - Payment schedule — how many milestones, what triggers each?
 - Are there out-of-scope items to explicitly exclude?
 
 **Timeline:**
+
 - Desired start date
 - Sprint cadence (default: 2-week sprints)
 - Any hard deadlines or milestones?
 - Include SolverCare post-launch support? If so, duration and complimentary or paid?
 
 **Resources:**
+
 - Team composition (roles, allocation: full-time/part-time, duration)
 
 **Prerequisites:**
+
 - What does the client need to provide before work begins?
 - Any vendor dependencies or environment access needed?
 
 **Logistics:**
+
 - Proposal ID convention: `{Client}-{Project}-{YYYY}-{MM}-{DD}-{Seq}` (e.g., `AGIA-EAPlus-2026-03-09-001`)
 
 ### Interview Tips
@@ -138,10 +145,12 @@ Present as a table: EPIC ID | Name | Description
 ### Sprint Plan
 
 Map EPICs to sprints. Each sprint section should:
+
 - Have a heading with sprint name + date range
 - Contain a table with EPIC sub-headers (light teal rows) grouping tasks
 
 Always include these phases:
+
 - Prerequisites / Kick-Off (1 week)
 - Technical Discovery (1 week)
 - Development Sprints (2 weeks each)
@@ -156,6 +165,7 @@ Build a week-by-week visual timeline table. Use teal fills for active sprint wee
 ### Present for Approval
 
 Show the user:
+
 1. Executive Summary draft (2-3 paragraphs)
 2. EPICs table
 3. Sprint plan outline (phases + date ranges)
@@ -197,6 +207,7 @@ npm install -g docx
 ### Read Required Skills
 
 Before writing code, always read:
+
 1. `/mnt/skills/public/docx/SKILL.md` — for docx-js patterns and validation
 2. `/mnt/skills/user/apply-solvative-brand/SKILL.md` — for brand colors and voice
 3. The template file: `/mnt/skills/organization/create-solvative-sow/assets/sow-template.js`
@@ -219,6 +230,7 @@ The template file at `assets/sow-template.js` contains the complete document gen
    - Header: `transformation: { width: 75, height: 13 }` inside a borderless table for vertical alignment
 
 2. **Colors** (hex without #):
+
    ```
    TEAL:        006D77   — accent, headings, EPIC headers
    TEAL_DK:     015C65   — EPIC sub-header text
@@ -279,24 +291,25 @@ After each iteration, validate, convert to PDF, and present both files.
 
 Every Solvative SOW includes these sections in this order:
 
-| # | Section | Notes |
-|---|---------|-------|
-| 1 | Cover Page | Logo, title, metadata table (Prepared for, Prepared by, Proposal ID, Date, Version), CONFIDENTIAL label |
-| 2 | Document History | Version table |
-| 3 | Executive Summary | 2-3 tight paragraphs. Client context → problem → solution → timeline + investment |
-| 4 | Scope of Work: EPICs | Table: EPIC ID, Name, Description |
-| 5 | Sprint Plan | Subsection per sprint with EPIC-grouped task tables |
-| 6 | Project Timeline | Gantt chart table + start/end date text |
-| 7 | Resource Allocation | Role, Allocation, Duration, Responsibilities |
-| 8 | Prerequisites | Artifact table with what client must provide |
-| 9 | Pricing and Payment | Investment summary (with discount if applicable) + Payment schedule |
-| 10 | Out-of-Scope Work | Bullet list of explicit exclusions |
-| 11 | Assumptions and Dependencies | Numbered list including timeline protection clause |
-| 12 | Project Approval and Acceptance | Two-column signature block |
+| #   | Section                         | Notes                                                                                                   |
+| --- | ------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| 1   | Cover Page                      | Logo, title, metadata table (Prepared for, Prepared by, Proposal ID, Date, Version), CONFIDENTIAL label |
+| 2   | Document History                | Version table                                                                                           |
+| 3   | Executive Summary               | 2-3 tight paragraphs. Client context → problem → solution → timeline + investment                       |
+| 4   | Scope of Work: EPICs            | Table: EPIC ID, Name, Description                                                                       |
+| 5   | Sprint Plan                     | Subsection per sprint with EPIC-grouped task tables                                                     |
+| 6   | Project Timeline                | Gantt chart table + start/end date text                                                                 |
+| 7   | Resource Allocation             | Role, Allocation, Duration, Responsibilities                                                            |
+| 8   | Prerequisites                   | Artifact table with what client must provide                                                            |
+| 9   | Pricing and Payment             | Investment summary (with discount if applicable) + Payment schedule                                     |
+| 10  | Out-of-Scope Work               | Bullet list of explicit exclusions                                                                      |
+| 11  | Assumptions and Dependencies    | Numbered list including timeline protection clause                                                      |
+| 12  | Project Approval and Acceptance | Two-column signature block                                                                              |
 
 ### Sections to move to MSA (NOT in SOW)
 
-The following belong in the Master Client Agreement, not the SOW:
+The following belong in the Master Service Agreement, not the SOW:
+
 - Travel/lodging/meal reimbursement details
 - Detailed cancellation terms
 - Interest on late payments
@@ -310,6 +323,7 @@ The SOW should reference the MSA: "This Statement of Work is governed by the Mas
 ## Voice and Tone
 
 Follow Solvative brand voice from the brand skill:
+
 - Confident and direct, not arrogant
 - Technically credible, no jargon
 - Outcomes-focused
