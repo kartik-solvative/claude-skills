@@ -204,11 +204,11 @@ const coverPage = {
         ]}),
         new TableRow({ children: [
           new TableCell({ borders: noBorders, width: { size: 2000, type: WidthType.DXA }, children: [new Paragraph({ children: [new TextRun({ text: "Proposal ID", font: "Arial", size: 18, color: MUTED })] })] }),
-          new TableCell({ borders: noBorders, width: { size: 3000, type: WidthType.DXA }, children: [new Paragraph({ children: [new TextRun({ text: "AGIA-EAPlus-2026-03-09-001", bold: true, font: "Arial", size: 18, color: INK })] })] }),
+          new TableCell({ borders: noBorders, width: { size: 3000, type: WidthType.DXA }, children: [new Paragraph({ children: [new TextRun({ text: "[PROPOSAL-ID]", bold: true, font: "Arial", size: 18, color: INK })] })] }),
         ]}),
         new TableRow({ children: [
           new TableCell({ borders: noBorders, width: { size: 2000, type: WidthType.DXA }, children: [new Paragraph({ children: [new TextRun({ text: "Date", font: "Arial", size: 18, color: MUTED })] })] }),
-          new TableCell({ borders: noBorders, width: { size: 3000, type: WidthType.DXA }, children: [new Paragraph({ children: [new TextRun({ text: "March 9, 2026", bold: true, font: "Arial", size: 18, color: INK })] })] }),
+          new TableCell({ borders: noBorders, width: { size: 3000, type: WidthType.DXA }, children: [new Paragraph({ children: [new TextRun({ text: "[DATE]", bold: true, font: "Arial", size: 18, color: INK })] })] }),
         ]}),
         new TableRow({ children: [
           new TableCell({ borders: noBorders, width: { size: 2000, type: WidthType.DXA }, children: [new Paragraph({ children: [new TextRun({ text: "Version", font: "Arial", size: 18, color: MUTED })] })] }),
@@ -230,8 +230,8 @@ const coverPage = {
 
 // ── Document History ──
 const docHistoryRows = [
-  ["03/09/2026", "0.1.0", "Initial Draft"],
-  ["03/09/2026", "1.0.0", "Finalized SOW with scope, pricing, timeline, and resource plan"],
+  ["[DATE]", "0.1.0", "Initial Draft"],
+  ["[DATE]", "1.0.0", "Finalized SOW with scope, pricing, timeline, and resource plan"],
 ];
 const docHistoryTable = new Table({
   width: { size: CONTENT_WIDTH, type: WidthType.DXA },
@@ -305,7 +305,7 @@ const epicsTable = new Table({
 const TEAL_LIGHT = "E6F3F4";
 
 const sprintPlan = [
-  { sprint: "Prerequisites / Kick-Off", weeks: "Week 1 (Mar 16\u201320)", epics: [
+  { sprint: "Prerequisites / Kick-Off", weeks: "Week 1", epics: [
     { epic: "Kick-Off Activities", tasks: [
       "AGIA provides complete API documentation for all backend endpoints",
       "Confirm staging environment ownership and arrange Solvative access",
@@ -313,7 +313,7 @@ const sprintPlan = [
       "AGIA provides screenshots or guided walkthrough of portal features as needed",
     ]},
   ]},
-  { sprint: "Technical Discovery", weeks: "Week 2 (Mar 23\u201327)", epics: [
+  { sprint: "Technical Discovery", weeks: "Week 2", epics: [
     { epic: "Discovery Activities", tasks: [
       "Architecture review and API mapping against existing portal features",
       "Component inventory and feature prioritization",
@@ -321,7 +321,7 @@ const sprintPlan = [
       "Staging environment validation and access confirmation",
     ]},
   ]},
-  { sprint: "Sprint 1 \u2014 Foundation", weeks: "Weeks 3\u20134 (Mar 30 \u2013 Apr 10)", epics: [
+  { sprint: "Sprint 1 \u2014 Foundation", weeks: "Weeks 3\u20134", epics: [
     { epic: "E1 \u2014 Authentication & Navigation", tasks: [
       "Next.js project scaffolding, toolchain setup, and CI/CD configuration",
       "Authentication and session management",
@@ -334,7 +334,7 @@ const sprintPlan = [
       "User account administration and user export",
     ]},
   ]},
-  { sprint: "Sprint 2 \u2014 Communications", weeks: "Weeks 5\u20136 (Apr 13\u201324)", epics: [
+  { sprint: "Sprint 2 \u2014 Communications", weeks: "Weeks 5\u20136", epics: [
     { epic: "E4 \u2014 Push Notifications", tasks: [
       "Push notification management and blast scheduling",
       "iOS and Android push certificate integration",
@@ -347,7 +347,7 @@ const sprintPlan = [
       "Static content management for EA+ mobile app",
     ]},
   ]},
-  { sprint: "Sprint 3 \u2014 Features & Integration", weeks: "Weeks 7\u20138 (Apr 27 \u2013 May 8)", epics: [
+  { sprint: "Sprint 3 \u2014 Features & Integration", weeks: "Weeks 7\u20138", epics: [
     { epic: "E6 \u2014 Content Management", tasks: [
       "FAQ content management",
     ]},
@@ -362,7 +362,7 @@ const sprintPlan = [
       "Bug resolution from Sprint 1\u20132 regression testing",
     ]},
   ]},
-  { sprint: "Sprint 4 \u2014 UAT", weeks: "Weeks 9\u201310 (May 11\u201322)", epics: [
+  { sprint: "Sprint 4 \u2014 UAT", weeks: "Weeks 9\u201310", epics: [
     { epic: "E8 \u2014 QA, UAT & Deployment", tasks: [
       "User Acceptance Testing (UAT) with AGIA stakeholders",
       "Bug fixes for issues identified during UAT",
@@ -370,7 +370,7 @@ const sprintPlan = [
       "Developer documentation and deployment runbook",
     ]},
   ]},
-  { sprint: "Sprint 5 \u2014 Production Deployment", weeks: "Weeks 11\u201312 (May 25 \u2013 Jun 5)", epics: [
+  { sprint: "Sprint 5 \u2014 Production Deployment", weeks: "Weeks 11\u201312", epics: [
     { epic: "E8 \u2014 QA, UAT & Deployment", tasks: [
       "Production deployment to AGIA\u2019s Azure tenant, coordinated with vendor as needed",
       "Production environment validation and smoke testing",
@@ -378,7 +378,7 @@ const sprintPlan = [
       "Knowledge transfer session with AGIA team",
     ]},
   ]},
-  { sprint: "SolverCare \u2014 Post-Launch Support", weeks: "Weeks 13\u201314 (Jun 8\u201319)", epics: [
+  { sprint: "SolverCare \u2014 Post-Launch Support", weeks: "Weeks 13\u201314", epics: [
     { epic: "Complimentary Support", tasks: [
       "Priority bug fixes for production issues",
       "Performance monitoring and optimization",
@@ -454,7 +454,6 @@ const ganttPhases = [
 ];
 const WEEK_COUNT = 14;
 const weekLabels = ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10", "W11", "W12", "W13", "W14"];
-const weekDates = ["Mar 16", "Mar 23", "Mar 30", "Apr 6", "Apr 13", "Apr 20", "Apr 27", "May 4", "May 11", "May 18", "May 25", "Jun 1", "Jun 8", "Jun 15"];
 
 const ganttColWidth = 460;
 const ganttLabelWidth = CONTENT_WIDTH - (WEEK_COUNT * ganttColWidth);
@@ -466,7 +465,7 @@ const ganttTable = new Table({
     // Header row with week numbers
     new TableRow({ children: [
       headerCell("Phase", ganttLabelWidth),
-      ...weekLabels.map((w, i) => new TableCell({
+      ...weekLabels.map((w) => new TableCell({
         borders,
         width: { size: ganttColWidth, type: WidthType.DXA },
         shading: { fill: DARK, type: ShadingType.CLEAR },
@@ -474,7 +473,6 @@ const ganttTable = new Table({
         verticalAlign: VerticalAlign.CENTER,
         children: [
           new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: w, bold: true, font: "Arial", size: 12, color: WHITE })] }),
-          new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: weekDates[i], font: "Arial", size: 9, color: "98A2B3" })] }),
         ]
       })),
     ]}),
@@ -739,7 +737,7 @@ const mainContent = {
                   margins: { top: 0, bottom: 0, left: 80, right: 0 },
                   children: [new Paragraph({
                     alignment: AlignmentType.LEFT,
-                    children: [new TextRun({ text: "|  EA+ Admin Portal Rewrite  |  SOW AGIA-EAPlus-2026-03-09-001", font: "Arial", size: 14, color: MUTED })]
+                    children: [new TextRun({ text: "|  [PROJECT NAME]  |  SOW [PROPOSAL-ID]", font: "Arial", size: 14, color: MUTED })]
                   })]
                 }),
               ]
@@ -792,8 +790,8 @@ const mainContent = {
     new Paragraph({ children: [new PageBreak()] }),
     sectionHeading("Project Timeline"),
     bodyPara([
-      new TextRun({ text: "Project start: March 16, 2026", bold: true, font: "Arial", size: 20, color: INK }),
-      new TextRun({ text: "  |  Production launch: June 5, 2026  |  SolverCare through: June 19, 2026", font: "Arial", size: 20, color: GRAY }),
+      new TextRun({ text: "Project start: [START DATE]", bold: true, font: "Arial", size: 20, color: INK }),
+      new TextRun({ text: "  |  Production launch: [LAUNCH DATE]  |  SolverCare through: [SOLVERCARE END DATE]", font: "Arial", size: 20, color: GRAY }),
     ]),
     ganttTable,
 
