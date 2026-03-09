@@ -72,7 +72,7 @@ function headerCell(text, width, opts = {}) {
   return new TableCell({
     borders,
     width: { size: width, type: WidthType.DXA },
-    shading: { fill: DARK, type: ShadingType.CLEAR },
+    shading: { fill: "000000", type: ShadingType.CLEAR },
     margins: headerCellMargins,
     verticalAlign: VerticalAlign.CENTER,
     ...opts,
@@ -468,7 +468,7 @@ const ganttTable = new Table({
       ...weekLabels.map((w) => new TableCell({
         borders,
         width: { size: ganttColWidth, type: WidthType.DXA },
-        shading: { fill: DARK, type: ShadingType.CLEAR },
+        shading: { fill: "000000", type: ShadingType.CLEAR },
         margins: { top: 40, bottom: 40, left: 10, right: 10 },
         verticalAlign: VerticalAlign.CENTER,
         children: [
