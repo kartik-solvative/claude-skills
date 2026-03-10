@@ -10,6 +10,13 @@ Versioning follows [Semantic Versioning](https://semver.org/):
 
 ---
 
+## [1.4.0] - 2026-03-10
+
+### Added
+- `solvative-create-project-charter` skill — generates Solvative-branded editable Project Charter (.docx) documents via a 5-phase workflow (interview → review → generate → deliver → iterate). Covers all 7 standard sections (A–G: General Information, Objective, Scope, Milestones, Roles & Responsibilities, Client Contacts, Resource Links) plus a Document History table. Styled with teal table headers, yellow section accents, Solvative logo cover, and confidential footer. Reuses SOW skill's docx-js patterns and logo asset.
+
+---
+
 ## [1.3.0] - 2026-03-09
 
 ### Added
