@@ -100,6 +100,21 @@ function bodyCell(text, width, opts = {}) {
   });
 }
 
+function bulletCell(items, width, opts = {}) {
+  return new TableCell({
+    borders,
+    width: { size: width, type: WidthType.DXA },
+    shading: opts.shading || { fill: WHITE, type: ShadingType.CLEAR },
+    margins: cellMargins,
+    verticalAlign: VerticalAlign.TOP,
+    children: items.map((item, i) => new Paragraph({
+      spacing: { after: i < items.length - 1 ? 60 : 0 },
+      alignment: AlignmentType.BOTH,
+      children: [new TextRun({ text: `\u2022  ${item}`, font: "Arial", size: 18, color: GRAY })]
+    }))
+  });
+}
+
 function altRow(i) {
   return i % 2 === 0 ? { fill: WHITE, type: ShadingType.CLEAR } : { fill: LIGHT_GRAY, type: ShadingType.CLEAR };
 }
@@ -274,14 +289,48 @@ const execSummaryParas = [
 
 // ── Scope of Work: EPICs Table ──
 const epics = [
-  ["E1", "Authentication & Navigation", "Session management, login, role-based access, app layout, sidebar navigation, and routing."],
-  ["E2", "Client Management", "CRUD operations for client records, client detail views, and pre-trip planning (read-only, legacy data display)."],
-  ["E3", "User Administration", "User listing, add/edit user accounts, user export functionality, and role management."],
-  ["E4", "Push Notifications", "Notification management, blast scheduling, iOS and Android push certificate integration."],
-  ["E5", "Newsletters & Email", "Newsletter creation and distribution, email template management (forgot password, service summaries, etc.)."],
-  ["E6", "Content Management", "Static content management for EA+ mobile app, FAQ content management."],
-  ["E7", "System & Monitoring", "System dashboard, log viewer, system settings display."],
-  ["E8", "QA, UAT & Deployment", "End-to-end integration testing, UAT with AGIA stakeholders, production deployment to Azure, handoff documentation."],
+  { id: "E1", name: "Authentication &\nNavigation", criteria: [
+    "Users can log in with existing credentials; sessions persist across page refreshes",
+    "Role-based access restricts views and actions consistent with the current portal's permission model",
+    "Sidebar navigation routes to all portal sections without errors",
+    "Logout terminates the session and redirects to login",
+  ]},
+  { id: "E2", name: "Client Management", criteria: [
+    "Client records can be created, viewed, edited, and deleted",
+    "Client detail views display all fields present in the current portal",
+    "Pre-trip planning module displays legacy data in read-only format",
+    "Search and filtering operate consistently with current portal behavior",
+  ]},
+  { id: "E3", name: "User Administration", criteria: [
+    "Admin users can list, add, edit, and deactivate user accounts",
+    "User export produces a downloadable file matching current export format",
+    "Role assignment functions correctly per existing role definitions",
+  ]},
+  { id: "E4", name: "Push Notifications", criteria: [
+    "Notifications can be created, scheduled, and sent to iOS and Android",
+    "Push certificate upload and management functions for both platforms",
+    "Blast scheduling allows date/time selection and confirmation",
+  ]},
+  { id: "E5", name: "Newsletters & Email", criteria: [
+    "Newsletters can be created, previewed, and distributed",
+    "Email templates (forgot password, service summaries) are editable and functional",
+    "Template changes reflect in outbound emails",
+  ]},
+  { id: "E6", name: "Content Management", criteria: [
+    "Static content for the mobile app can be created, edited, and published",
+    "FAQ entries can be added, edited, reordered, and deleted",
+  ]},
+  { id: "E7", name: "System & Monitoring", criteria: [
+    "System dashboard displays status metrics consistent with the current portal",
+    "Log viewer displays system logs with filtering capability",
+    "System settings display current configuration values",
+  ]},
+  { id: "E8", name: "QA, UAT & Deployment", criteria: [
+    "All E1\u2013E7 acceptance criteria pass in the staging environment",
+    "UAT sign-off received from Client",
+    "Application deployed and validated in Client's production environment",
+    "Developer documentation and deployment runbook delivered",
+  ]},
 ];
 
 const epicsTable = new Table({
@@ -291,15 +340,19 @@ const epicsTable = new Table({
     new TableRow({ children: [
       headerCell("EPIC", 800),
       headerCell("Name", 2500),
-      headerCell("Description", 6060),
+      headerCell("Acceptance Criteria", 6060),
     ]}),
     ...epics.map((e, i) => new TableRow({ children: [
-      bodyCell([new TextRun({ text: e[0], bold: true, font: "Arial", size: 18, color: TEAL })], 800, { shading: altRow(i) }),
-      bodyCell([new TextRun({ text: e[1], bold: true, font: "Arial", size: 18, color: INK })], 2500, { shading: altRow(i) }),
-      bodyCell(e[2], 6060, { shading: altRow(i) }),
+      bodyCell([new TextRun({ text: e.id, bold: true, font: "Arial", size: 18, color: TEAL })], 800, { shading: altRow(i) }),
+      bodyCell([new TextRun({ text: e.name, bold: true, font: "Arial", size: 18, color: INK })], 2500, { shading: altRow(i) }),
+      bulletCell(e.criteria, 6060, { shading: altRow(i) }),
     ]})),
   ]
 });
+
+const acceptanceCriteriaNote = bodyPara([
+  new TextRun({ text: "Acceptance for each EPIC is based on functional equivalence with the existing system. Visual design differences between the legacy and rewritten interfaces do not constitute defects provided that all functional requirements are met. Client will have seven (7) days following delivery of each Sprint to accept or reject the deliverables for that Sprint per MSA Section 2.4.", font: "Arial", size: 18, italics: true, color: GRAY }),
+]);
 
 // ── Sprint Plan: Grouped by EPIC within each Sprint ──
 const TEAL_LIGHT = "E6F3F4";
@@ -387,6 +440,37 @@ const sprintPlan = [
   ]},
 ];
 
+const uatContingencyPara = bodyPara([
+  new TextRun({ text: "Production deployment is contingent upon written UAT sign-off from Client. Solvative will not proceed with production deployment until Client provides written confirmation (email is sufficient) that UAT is complete and accepted. If UAT sign-off is not received by the end of the UAT sprint, the production deployment timeline and all subsequent milestones (including SolverCare) will shift by an equivalent duration.", font: "Arial", size: 18, italics: true, color: GRAY }),
+]);
+
+const solverCareTermsParagraph = bodyPara([
+  new TextRun({ text: "Solvative will provide up to 20 hours of complimentary post-launch support during the SolverCare period, subject to the following terms:", font: "Arial", size: 18, italics: true, color: GRAY }),
+]);
+
+const solverCareTermsBullets = [
+  "Support covers defects only \u2014 defined as deviations from the functional requirements documented in the EPICs of this SOW",
+  "Enhancement requests, new features, and changes to requirements are out of scope and will be addressed via Change Order",
+  "Support is provided during Solvative\u2019s standard business hours (9:00 AM \u2013 6:00 PM CT, Monday \u2013 Friday)",
+  "Solvative will acknowledge reported issues within 1 business day and provide an estimated resolution timeline",
+  "If the 20-hour allocation is exhausted before the end of the SolverCare period, additional support will be available via a separate SOW or Change Order",
+  "SolverCare begins upon production deployment. If production deployment is delayed, SolverCare shifts accordingly",
+].map(item => new Paragraph({
+  spacing: { after: 60 },
+  alignment: AlignmentType.BOTH,
+  children: [new TextRun({ text: `\u2022  ${item}`, font: "Arial", size: 18, color: GRAY })]
+}));
+
+const warrantyPeriodPara = [
+  new Paragraph({
+    spacing: { before: 200, after: 60 },
+    children: [new TextRun({ text: "Warranty Period", bold: true, italics: true, font: "Arial", size: 20, color: DARK })]
+  }),
+  bodyPara([
+    new TextRun({ text: "Per MSA Section 7.2, the Warranty Period for this SOW is fourteen (14) days from the date of production deployment, running concurrently with the SolverCare support period. During the Warranty Period, Solvative will remedy defects \u2014 defined as deviations from the functional requirements documented in the EPICs of this SOW \u2014 at no additional cost. Enhancement requests, new features, and changes to requirements are not covered under this warranty. Upon expiration of the Warranty Period, any additional support will be available via a separate SOW or Change Order.", font: "Arial", size: 18, italics: true, color: GRAY }),
+  ]),
+];
+
 // Build sprint elements: heading + table per sprint
 const sprintElements = [];
 sprintPlan.forEach((s) => {
@@ -438,22 +522,28 @@ sprintPlan.forEach((s) => {
     columnWidths: [3200, 6160],
     rows: rows,
   }));
+  if (s.sprint.startsWith("Sprint 5")) {
+    sprintElements.push(uatContingencyPara);
+  }
+  if (s.sprint.startsWith("SolverCare")) {
+    sprintElements.push(solverCareTermsParagraph, ...solverCareTermsBullets, ...warrantyPeriodPara);
+  }
 });
 
 
 // ── Gantt Chart (table-based) ──
 const ganttPhases = [
-  { name: "Prerequisites/Kick-Off",    bars: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { name: "Technical Discovery",       bars: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { name: "Sprint 1 \u2014 Foundation",       bars: [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { name: "Sprint 2 \u2014 Communications",   bars: [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { name: "Sprint 3 \u2014 Features",         bars: [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0] },
-  { name: "Sprint 4 \u2014 UAT",              bars: [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0] },
-  { name: "Sprint 5 \u2014 Prod Deploy",      bars: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0] },
-  { name: "SolverCare (complimentary)", bars: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2] },
+  { name: "Prerequisites/Kick-Off",    bars: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  { name: "Technical Discovery",       bars: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  { name: "Sprint 1 \u2014 Foundation",       bars: [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0] },
+  { name: "Sprint 2 \u2014 Communications",   bars: [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0] },
+  { name: "Sprint 3 \u2014 Features",         bars: [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0] },
+  { name: "Sprint 4 \u2014 UAT",              bars: [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0] },
+  { name: "Sprint 5 \u2014 Prod Deploy",      bars: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0] },
+  { name: "SolverCare (complimentary)", bars: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2] },
 ];
-const WEEK_COUNT = 14;
-const weekLabels = ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10", "W11", "W12", "W13", "W14"];
+const WEEK_COUNT = 12;
+const weekLabels = ["W0", "W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10", "W11"];
 
 const ganttColWidth = 460;
 const ganttLabelWidth = CONTENT_WIDTH - (WEEK_COUNT * ganttColWidth);
@@ -554,6 +644,59 @@ const prereqTable = new Table({
   ]
 });
 
+// ── Deliverables ──
+const deliverables = [
+  ["Source Code Repository", "Sprint 3", "Complete application source code, committed to a repository accessible by Client"],
+  ["Deployed Staging Application", "Sprint 3", "Fully functional application deployed to Client\u2019s staging environment"],
+  ["QA Sign-Off Report", "Sprint 4", "Test results documenting pass/fail status for all EPIC acceptance criteria"],
+  ["Deployed Production Application", "Sprint 5", "Application deployed and validated in Client\u2019s production environment"],
+  ["Developer Documentation", "Sprint 5", "Technical documentation covering architecture, component structure, and environment configuration"],
+  ["Deployment Runbook", "Sprint 5", "Step-by-step instructions for building, deploying, and rolling back the application"],
+  ["Knowledge Transfer Session", "Sprint 5", "Live walkthrough with Client\u2019s technical team covering codebase, deployment process, and operational considerations"],
+];
+
+const deliverablesTable = new Table({
+  width: { size: CONTENT_WIDTH, type: WidthType.DXA },
+  columnWidths: [3000, 1400, 4960],
+  rows: [
+    new TableRow({ children: [
+      headerCell("Deliverable", 3000),
+      headerCell("Sprint", 1400),
+      headerCell("Description", 4960),
+    ]}),
+    ...deliverables.map((d, i) => new TableRow({ children: [
+      bodyCell([new TextRun({ text: d[0], bold: true, font: "Arial", size: 18, color: INK })], 3000, { shading: altRow(i) }),
+      bodyCell(d[1], 1400, { shading: altRow(i) }),
+      bodyCell(d[2], 4960, { shading: altRow(i) }),
+    ]})),
+  ]
+});
+
+// ── Solvative Materials ──
+const solvativeMaterials = [
+  ["Project Scaffolding", "Project structure, build configuration, and CI/CD pipeline templates"],
+  ["UI Component Library", "Reusable UI components, layout primitives, form controls, and design system utilities"],
+  ["Authentication Module", "Generic authentication/session management patterns and middleware"],
+  ["API Integration Layer", "HTTP client abstractions, error handling utilities, and request/response interceptors"],
+  ["Testing Framework", "Test configuration, helper utilities, and reusable test patterns"],
+  ["DevOps Tooling", "Deployment scripts, environment configuration templates, and monitoring setup"],
+];
+
+const solvativeMaterialsTable = new Table({
+  width: { size: CONTENT_WIDTH, type: WidthType.DXA },
+  columnWidths: [3000, 6360],
+  rows: [
+    new TableRow({ children: [
+      headerCell("Component", 3000),
+      headerCell("Description", 6360),
+    ]}),
+    ...solvativeMaterials.map((m, i) => new TableRow({ children: [
+      bodyCell([new TextRun({ text: m[0], bold: true, font: "Arial", size: 18, color: INK })], 3000, { shading: altRow(i) }),
+      bodyCell(m[1], 6360, { shading: altRow(i) }),
+    ]})),
+  ]
+});
+
 // ── Pricing Table ──
 const pricingTable = new Table({
   width: { size: CONTENT_WIDTH, type: WidthType.DXA },
@@ -643,26 +786,25 @@ const paymentTable = new Table({
 // ── Out of Scope ──
 const outOfScope = [
   "Backend or API development (Solvative will consume existing APIs as-is)",
-  "Mobile app (EA+) development or modification",
   "Database schema changes or data migrations",
   "New features or functionality beyond existing portal capabilities",
   "Ongoing post-launch support and maintenance (available via separate SOW)",
-  "Third-party licensing fees, cloud hosting costs, or Azure infrastructure provisioning",
-  "WordPress / WooCommerce project (separate engagement)",
-  "Java / Spring Boot staff augmentation (separate engagement)",
+  "Third-party licensing fees, cloud hosting costs, or infrastructure provisioning",
   "Any feature or functionality not explicitly described in this Scope of Work",
 ];
 
 // ── Assumptions & Dependencies ──
 const assumptions = [
-  "AGIA will provide all prerequisite artifacts (API documentation, environment access, feature screenshots) within the first week. Project kickoff is contingent on receipt of these materials; any delay in delivery will result in a corresponding shift to the project timeline.",
-  "If the staging environment is owned by the original development vendor, AGIA will coordinate access on Solvative\u2019s behalf. Solvative\u2019s timeline commitments are contingent on timely access being granted.",
-  "AGIA will provide feedback within 3 business days of each review or approval request. Delays in feedback may result in corresponding timeline extensions.",
-  "AGIA is responsible for providing all required content, assets, credentials, and third-party access in a timely manner prior to the applicable phase.",
-  "The existing backend APIs will remain stable and available throughout the project duration. Any changes to APIs by AGIA or its vendors during the engagement may require scope reassessment.",
+  "Client will provide all prerequisite artifacts (API documentation, environment access, feature screenshots) within the first week. Project kickoff is contingent on receipt of these materials; any delay in delivery will result in a corresponding shift to the project timeline.",
+  "If the environment is owned by the original development vendor, Client will coordinate access on Solvative\u2019s behalf. Solvative\u2019s timeline commitments are contingent on timely access being granted.",
+  "Client will provide feedback within 3 business days of each review or approval request. Delays in feedback may result in corresponding timeline extensions.",
+  "Client is responsible for providing all required content, assets, credentials, and third-party access in a timely manner prior to the applicable phase.",
+  "The existing backend APIs will remain stable and available throughout the project duration. Any changes to APIs by Client or its vendors during the engagement that require frontend rework will be addressed through a Change Order. Timeline extensions resulting from API changes will be at minimum equal to the duration of the disruption. Solvative is not responsible for defects or delays caused by undocumented, changed, or unavailable API endpoints.",
   "Solvative will not commence performing any services unless and until Solvative receives the initial payment upon execution. The remaining balance is due upon production launch.",
   "For any out-of-scope work, it will be pre-approved by the Client and documented through a Change Order.",
-  "This Statement of Work is governed by the Master Service Agreement (MSA) executed between AGIA and Solvative. General terms including liability, cancellation, payment terms, and dispute resolution are covered under the MSA.",
+  "This Statement of Work is governed by the Master Service Agreement (MSA) executed between Client and Solvative. General terms including liability, cancellation, payment terms, and dispute resolution are covered under the MSA.",
+  "Production deployment requires written UAT sign-off from Client prior to commencement. UAT sign-off confirms that the application meets the functional requirements defined in the EPICs of this SOW. If Client identifies defects during UAT, Solvative will remediate defects that represent deviations from the documented EPIC scope. Enhancement requests or new functionality identified during UAT are out of scope and will be addressed via Change Order.",
+  "Solvative may use AI-Assisted Development tools (including but not limited to GitHub Copilot, Claude Code, and similar tools) in performing the Services under this SOW, per MSA Section 4.3. All AI-generated code is reviewed by Solvative engineers and held to the same code review, testing, and quality assurance standards as human-authored code. Solvative will not input Client Confidential Information or PII into any third-party AI coding tool that retains inputs for model training.",
 ];
 
 // ── Signature Block ──
@@ -779,6 +921,7 @@ const mainContent = {
     subHeading("EPICs"),
     bodyPara("The following EPICs define the functional scope of this engagement:"),
     epicsTable,
+    acceptanceCriteriaNote,
 
     // Sprint Plan
     new Paragraph({ children: [new PageBreak()] }),
@@ -804,6 +947,9 @@ const mainContent = {
     sectionHeading("Prerequisites"),
     bodyPara("The following artifacts and access must be provided by AGIA prior to project kickoff. Sprint execution will not begin until all prerequisites are received."),
     prereqTable,
+    sectionHeading("Deliverables"),
+    bodyPara([new TextRun({ text: "The following items constitute the Work Product delivered under this SOW, subject to MSA Section 6.3:", font: "Arial", size: 18, italics: true, color: GRAY })]),
+    deliverablesTable,
 
     // Pricing
     sectionHeading("Pricing and Payment"),
@@ -815,6 +961,10 @@ const mainContent = {
 
     subHeading("Payment Schedule"),
     paymentTable,
+    bodyPara([
+      new TextRun({ text: "Change Orders: ", bold: true, italics: true, font: "Arial", size: 18, color: DARK }),
+      new TextRun({ text: "Any work outside the scope of this Statement of Work will require a written Change Order approved by both parties prior to commencement. Each Change Order will specify the scope, timeline, and fees for the additional work at rates to be mutually agreed upon by the parties at that time. Solvative will not commence any out-of-scope work without an executed Change Order.", italics: true, font: "Arial", size: 18, color: GRAY }),
+    ]),
 
     // Out of Scope
     new Paragraph({ children: [new PageBreak()] }),
@@ -826,6 +976,11 @@ const mainContent = {
       spacing: { after: 60 },
       children: [new TextRun({ text: item, font: "Arial", size: 18, color: GRAY })]
     })),
+
+    sectionHeading("Solvative Materials"),
+    bodyPara([new TextRun({ text: "Per MSA Section 6.3, the following components are designated as Solvative Materials and remain the exclusive property of Solvative. Client receives a non-exclusive, non-transferable, perpetual license to use these solely in conjunction with the delivered Work Product.", font: "Arial", size: 18, italics: true, color: GRAY })]),
+    solvativeMaterialsTable,
+    bodyPara([new TextRun({ text: "All components listed above are general-purpose and reusable across Solvative engagements. Custom business logic, client-specific configurations, and application code uniquely created for this engagement constitute Work Product and belong to Client upon full payment per the MSA.", font: "Arial", size: 18, italics: true, color: GRAY })]),
 
     // Assumptions & Dependencies
     sectionHeading("Assumptions and Dependencies"),
@@ -858,7 +1013,7 @@ const mainContent = {
               new Paragraph({ spacing: { before: 400 }, border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: BORDER_GRAY, space: 1 } }, children: [] }),
               new Paragraph({ children: [new TextRun({ text: "Authorized Signature", font: "Arial", size: 14, color: MUTED })] }),
               new Paragraph({ spacing: { before: 200 }, border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: BORDER_GRAY, space: 1 } }, children: [] }),
-              new Paragraph({ children: [new TextRun({ text: "Name (Print)", font: "Arial", size: 14, color: MUTED })] }),
+              new Paragraph({ children: [new TextRun({ text: "Name", font: "Arial", size: 14, color: MUTED })] }),
               new Paragraph({ spacing: { before: 200 }, border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: BORDER_GRAY, space: 1 } }, children: [] }),
               new Paragraph({ children: [new TextRun({ text: "Title", font: "Arial", size: 14, color: MUTED })] }),
               new Paragraph({ spacing: { before: 200 }, border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: BORDER_GRAY, space: 1 } }, children: [] }),
@@ -873,7 +1028,7 @@ const mainContent = {
               new Paragraph({ spacing: { before: 400 }, border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: BORDER_GRAY, space: 1 } }, children: [] }),
               new Paragraph({ children: [new TextRun({ text: "Authorized Signature", font: "Arial", size: 14, color: MUTED })] }),
               new Paragraph({ spacing: { before: 200 }, border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: BORDER_GRAY, space: 1 } }, children: [] }),
-              new Paragraph({ children: [new TextRun({ text: "Name (Print)", font: "Arial", size: 14, color: MUTED })] }),
+              new Paragraph({ children: [new TextRun({ text: "Name", font: "Arial", size: 14, color: MUTED })] }),
               new Paragraph({ spacing: { before: 200 }, border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: BORDER_GRAY, space: 1 } }, children: [] }),
               new Paragraph({ children: [new TextRun({ text: "Title", font: "Arial", size: 14, color: MUTED })] }),
               new Paragraph({ spacing: { before: 200 }, border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: BORDER_GRAY, space: 1 } }, children: [] }),
