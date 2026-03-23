@@ -37,8 +37,10 @@ cd /tmp && git clone https://github.com/kartik-solvative/claude-skills.git solva
 |---|---|---|
 | `solvative-create-deck` | Generates Solvative-branded PPTX presentations via 5-phase conversational flow | "create a presentation", "make slides", "build a deck", "create a PPTX" |
 | `solvative-create-sow` | Generates Solvative-branded Statement of Work (.docx) documents via 6-phase conversational flow | "create a SOW", "write a statement of work", "draft a proposal", "build a scope document" |
+| `solvative-create-project-charter` | Generates Solvative-branded Project Charter (.docx) documents covering all 7 standard sections via 5-phase workflow | "create a project charter", "write a charter", "draft a project charter", "generate a charter document" |
 | `solvative-create-skill` | Guides authoring and submitting a new skill to this plugin | "create a new Solvative skill", "add a skill", "write a skill for Solvative" |
 | `solvative-create-marketing-site` | Generates Hygraph-powered marketing sites with block-based CMS and scroll-storytelling | "create a marketing site", "build a marketing website", "create a landing page" |
+| `solvative-architect-qa-ecosystem` | Orchestrates a fully autonomous, multi-agent AI QA pipeline — from feature analysis and Playwright test generation through quality gating, self-healing execution, and configurable results reporting | "setup AI QA", "build autonomous testing system", "check test coverage", "audit this function for edge cases", "analyze for breaking changes" |
 
 ---
 
@@ -60,8 +62,11 @@ Use a slash command to explicitly trigger a skill:
 
 ```
 /solvative-claude-skills:solvative-create-deck
+/solvative-claude-skills:solvative-create-sow
+/solvative-claude-skills:solvative-create-project-charter
 /solvative-claude-skills:solvative-create-skill
 /solvative-claude-skills:solvative-create-marketing-site
+/solvative-claude-skills:solvative-architect-qa-ecosystem
 ```
 
 ### How skills work
@@ -237,9 +242,15 @@ solvative-claude-skills/
 ├── skills/
 │   ├── solvative-create-deck/
 │   │   └── SKILL.md
+│   ├── solvative-create-sow/
+│   │   └── SKILL.md
+│   ├── solvative-create-project-charter/
+│   │   └── SKILL.md
 │   ├── solvative-create-skill/
 │   │   └── SKILL.md
-│   └── solvative-create-marketing-site/
+│   ├── solvative-create-marketing-site/
+│   │   └── SKILL.md
+│   └── solvative-architect-qa-ecosystem/
 │       └── SKILL.md
 └── docs/
     ├── contributing.md      ← detailed contribution guide
