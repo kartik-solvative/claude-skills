@@ -1,19 +1,19 @@
 ---
 name: solvative-architect-qa-ecosystem
-description: This skill should be used when the user asks to "check the test coverage of this PR", "run a smoke test on the latest build", "audit this function for edge cases", "analyze this new feature for potential breaking changes", "review the code for performance bottlenecks", "setup AI QA", "build autonomous testing system", or wants to establish or operate a fully autonomous AI-driven QA pipeline. It orchestrates a multi-agent, self-healing QA ecosystem that takes a feature or codebase from initial analysis through Playwright test generation, quality gating, autonomous self-correction, and TestDino documentation with near-zero human oversight.
-version: 1.0.0
+description: This skill should be used when the user asks to "check the test coverage of this PR", "run a smoke test on the latest build", "audit this function for edge cases", "analyze this new feature for potential breaking changes", "review the code for performance bottlenecks", "setup AI QA", "build autonomous testing system", or wants to establish or operate a fully autonomous AI-driven QA pipeline. It orchestrates a multi-agent, self-healing QA ecosystem that takes a feature or codebase from initial analysis through Playwright test generation, quality gating, autonomous self-correction, and configurable results documentation with near-zero human oversight.
+version: 1.0.1
 ---
 
 # Solvative Autonomous AI QA Ecosystem
 
-This skill architects and operates a fully autonomous, multi-agent QA ecosystem that independently navigates the software lifecycle — from feature analysis and code auditing to Playwright test generation, self-healing execution, and TestDino documentation. It is designed for near-zero human oversight across both OSS and Enterprise environments.
+This skill architects and operates a fully autonomous, multi-agent QA ecosystem that independently navigates the software lifecycle — from feature analysis and code auditing to Playwright test generation, self-healing execution, and configurable results documentation. It is designed for near-zero human oversight across both OSS and Enterprise environments, and adapts Phase 6 output to whatever test management or reporting destination the team uses.
 
 ---
 
 ## Quick Reference
 
-- **Output:** Feature Design Document (FDD), tiered test strategy, Playwright POM test suite, quality audit report, self-healed passing tests, TestDino sync
-- **Stack:** Playwright (Page Object Model), TestDino (test management), GitHub PRs
+- **Output:** Feature Design Document (FDD), tiered test strategy, Playwright POM test suite, quality audit report, self-healed passing tests, QA Summary Report + optional sync to a test management system
+- **Stack:** Playwright (Page Object Model), GitHub PRs; Phase 6 destination is configurable (TestDino, Jira, Notion, Linear, markdown file, etc.)
 - **Test priority tiers:** P0 (mission-critical), P1 (core functionality), P2 (edge cases)
 - **Self-healing loop:** 5 iterative cycles before escalating
 - **Key conventions:** Solvative brand colors and Poppins font in all documents/reports; strict "No Exceptions" quality gate
@@ -114,7 +114,7 @@ Audit the generated code for:
 
 **Enforcement policy — No Exceptions:**
 - **CRITICAL violations** → block pipeline, return to Phase 3 with specific remediation instructions
-- **WARNING violations** → log and allow continuation, flag for Phase 6 documentation
+- **WARNING violations** → log and allow continuation, flag for Phase 6 reporting
 - **PASS** → advance to Phase 5
 
 **Output:** Quality Audit Report — categorized finding list with severity, file location, line number, and remediation guidance
@@ -142,20 +142,26 @@ Audit the generated code for:
 
 ### Phase 6 — Documentation Specialist
 
-**Goal:** Close the loop. Sync all artifacts to TestDino as the single source of truth.
+**Goal:** Close the loop. Consolidate all artifacts and deliver results to wherever the team tracks quality.
 
-1. Collect all outputs from Phases 1–5:
+1. **Ask the user** where they want results delivered. Supported destinations:
+   - **Markdown file** (default) — written to `./qa-reports/<feature-name>-<date>.md` in the project
+   - **Test management system** (e.g. TestDino, Jira, Linear, Notion) — ask for the destination URL/project key and use its API or provide copy-paste structured output
+   - **Inline conversation** — deliver the full report directly in the chat with no file written
+   - If the user says "skip" or "none", omit Phase 6 entirely and end at Phase 5
+
+2. Collect all outputs from Phases 1–5:
    - FDD, TSD, Quality Audit Report, Self-Healing Log, final test suite
-2. Sync to **TestDino**:
-   - Create or update test cases mapped to the feature
-   - Attach the FDD and TSD as supporting documents
-   - Log all Quality Guardian findings and their resolution status
-   - Record self-healing cycle history against each test
-   - Mark escalated tests with `NEEDS_HUMAN_REVIEW` status
-3. Generate a stakeholder-ready **QA Summary Report**:
-   - Formatted using Solvative brand colors (`#002125` background, `#FFC400` accents, Poppins font)
+
+3. Structure the output for the chosen destination:
+   - **For file / inline:** produce a single consolidated markdown document
+   - **For a test management system:** map each test case to a ticket/test record; attach FDD and TSD as supporting documents; log Quality Guardian findings with severity and resolution status; record self-healing history per test; mark escalated tests as `NEEDS_HUMAN_REVIEW`
+
+4. Generate a stakeholder-ready **QA Summary Report** regardless of destination:
+   - Formatted using Solvative brand colors (`#002125` background, `#FFC400` accents, Poppins font) when producing HTML output; plain markdown otherwise
    - Sections: Coverage Summary, P0/P1/P2 pass rates, Critical Findings, Escalations, Recommendations
-4. **Output:** TestDino updated, QA Summary Report delivered to user
+
+5. **Output:** QA Summary Report delivered to the chosen destination
 
 ---
 

@@ -10,6 +10,13 @@ Versioning follows [Semantic Versioning](https://semver.org/):
 
 ---
 
+## [1.5.1] - 2026-03-23
+
+### Changed
+- `solvative-architect-qa-ecosystem`: Phase 6 is now stack-agnostic — Claude asks the user for a delivery destination (markdown file, test management system, inline, or skip) instead of hardcoding TestDino
+
+---
+
 ## [1.5.0] - 2026-03-23
 
 ### Added
