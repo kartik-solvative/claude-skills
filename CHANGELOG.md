@@ -10,6 +10,13 @@ Versioning follows [Semantic Versioning](https://semver.org/):
 
 ---
 
+## [1.5.0] - 2026-03-23
+
+### Added
+- `solvative-architect-qa-ecosystem` skill — orchestrates a fully autonomous, multi-agent AI QA pipeline from feature analysis through Playwright test generation, quality gating (No Exceptions policy), 5-cycle self-healing execution, and TestDino documentation sync. Includes 6 sequential phase agents (Discovery Specialist, QA Strategist, Test Developer, Quality Guardian, Self-Correction Engine, Documentation Specialist) plus an Independent Auditor for GitHub PR review mode.
+
+---
+
 ## [1.4.0] - 2026-03-10
 
 ### Added
