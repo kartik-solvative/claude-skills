@@ -10,6 +10,13 @@ Versioning follows [Semantic Versioning](https://semver.org/):
 
 ---
 
+## [1.5.2] - 2026-04-02
+
+### Changed
+- Version bump to 1.5.2
+
+---
+
 ## [1.5.1] - 2026-03-23
 
 ### Changed
