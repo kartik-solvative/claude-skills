@@ -10,6 +10,13 @@ Versioning follows [Semantic Versioning](https://semver.org/):
 
 ---
 
+## [1.6.0] - 2026-05-13
+
+### Added
+- `solvative-audit-dependencies` skill — auto-detects the package manager (npm/pnpm/yarn/bun), runs the correct audit command, groups vulnerabilities by severity (Critical → Info), and delivers a concise remediation summary with auto-fix and manual-upgrade steps
+
+---
+
 ## [1.5.2] - 2026-04-02
 
 ### Changed
